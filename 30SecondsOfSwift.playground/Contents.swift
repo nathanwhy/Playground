@@ -41,5 +41,16 @@ extension Node: ExpressibleByIntegerLiteral {
 let root: Node = .op(+, 1, .op(*, 2, 3))
 root.evaluate()
 
+// For in
 
-
+// before
+let subviews: [UIView] = []
+for view in subviews {
+    if let button = view as? UIButton {
+        button.setImage(nil, for: .normal)
+    }
+}
+// after
+for case let button as UIButton in subviews {
+    button.setImage(nil, for: .normal)
+}
