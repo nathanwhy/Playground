@@ -2,7 +2,7 @@ import UIKit
 
 var str = "Hello, playground"
 
-// Difference with FlapMap and CompactMap
+// 1.Difference with FlapMap and CompactMap
 
 let optional: Int? = 1
 let a = [1, 2, nil]
@@ -17,7 +17,7 @@ print(c1)
 print(c2)
 
 
-// Implementation: 1 + 2 * 3
+// 2.Implementation: 1 + 2 * 3
 // The answer is from: https://weibo.com/onevcat
 
 
@@ -54,3 +54,40 @@ for view in subviews {
 for case let button as UIButton in subviews {
     button.setImage(nil, for: .normal)
 }
+
+// 3.ExpressibleByStringLiteral
+
+struct Person: ExpressibleByStringLiteral {
+    init(stringLiteral value: String) {
+        name = value
+    }
+    let name: String
+}
+
+let ana: Person = "Ana"
+
+// 4.ExpressibleByArrayLiteral
+
+struct Stack<T> {
+    private var array = [T]()
+    
+    func peek() -> T? {
+        array.last
+    }
+    
+    mutating func pop() -> T? {
+        array.popLast()
+    }
+    
+    mutating func push(_ element: T) {
+        array.append(element)
+    }
+}
+
+extension Stack: ExpressibleByArrayLiteral {
+    init(arrayLiteral elements: T...) {
+        self.init(from: elements)
+    }
+}
+
+var stack: Stack = [1, 2, 3, 4]
