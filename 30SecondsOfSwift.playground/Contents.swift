@@ -86,8 +86,38 @@ struct Stack<T> {
 
 extension Stack: ExpressibleByArrayLiteral {
     init(arrayLiteral elements: T...) {
-        self.init(from: elements)
+        self.array = elements
     }
 }
 
 var stack: Stack = [1, 2, 3, 4]
+
+// Sendable
+// Ensures concurrent safety
+
+// Immutable class (reference type)
+final class Dog: Sendable {
+    let value: Int
+
+    init(value: Int) {
+        self.value = value
+    }
+}
+
+// unchecked Sendable
+
+// Mutable class (ref type)
+final class Company: @unchecked Sendable {
+    private var name: String
+    private let queue = DispatchQueue(label: "company_update")
+    
+    init(name: String) {
+        self.name = name
+    }
+    
+    func update(_ newName: String) {
+        queue.sync {
+            self.name = newName
+        }
+    }
+}
