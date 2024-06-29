@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var strength = 0.0
     var body: some View {
         VStack {
             Image(systemName: "globe")
@@ -16,6 +17,14 @@ struct ContentView: View {
             Text("Hello, world!")
             TextRendererTest()
             HighlightedText(text: "Hello World", highlightedText: "World")
+            Text("SHOCKWAVE")
+                .font(.largeTitle.weight(.black).width(.compressed))
+                .textRenderer(QuakeRenderer(moveAmount: strength))
+                .onAppear {
+                    withAnimation(.easeInOut(duration: 1).repeatForever(autoreverses: true)) {
+                        strength = 10
+                    }
+                }
         }
         .padding()
     }
